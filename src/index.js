@@ -83,14 +83,15 @@ module.exports = function (event, callback) {
       .drawRectangle(`0, 0, ${width}, ${height}`)   // 绘制背景
       .fill(res[1])
       .drawCircle(190, 80, 190, 125)                // 绘制头像
-      .draw(`image Over 0, 0 ${width}, ${height} "${res[2]}"`)  // 绘制文本
+      .fill(res[2])
+      .drawRectangle(`0, 0, ${width}, ${height}`)   // 绘制文本
       .toBuffer('PNG', function (err, buffer) {
         if (err) {
           return callback(err)
         }
         uploadImage(buffer).then((res) => {
-          // 海报 URL 为：res.data.file_link
-          callback(null, 'success')
+          console.log('success')
+          callback(null, res.data.file_link)
         }).catch(err => {
           callback(err)
         })
