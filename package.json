@@ -14,10 +14,10 @@
   "license": "ISC",
   "devDependencies": {
     "mincloud": "^1.0.4",
-    "webpack-cli": "^3.1.2"
+    "webpack-cli": "^3.1.2",
+    "webpack": "^4.22.0"
   },
   "dependencies": {
-    "gm": "^1.23.1",
-    "webpack": "^4.22.0"
+    "gm": "^1.23.1"
   }
 }
