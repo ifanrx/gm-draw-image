@@ -6,7 +6,7 @@ const avatarImg = 'https://cloud-minapp-6.cloud.ifanrusercontent.com/1gQ5Mat7WAw
 const backgroundImg = 'https://cloud-minapp-6.cloud.ifanrusercontent.com/1gQ7hCpFCK1qw8XQ.jpeg'
 
 const MyFile = new BaaS.File()
-const backgroundParams = {
+const imageSize = {
   width: 375,
   height: 250,
 }
@@ -25,9 +25,9 @@ function uploadImage(buffer) {
   return MyFile.upload(buffer, {filename: Math.random().toString().slice(2) + '.png'}) 
 }
 
-function genText(filename) {
+function drawText(filename) {
   return new Promise((resolve, reject) => {
-    gm(backgroundParams.width, backgroundParams.height, 'none')
+    gm(imageSize.width, imageSize.height, 'none')
       // 设置字体以及文字大小，这里只能设置云函数已支持的字体
       .font('/usr/share/fonts/ttf-bitstream-vera/VeraMoBd.ttf')  
       .fill('#fff')
@@ -73,10 +73,10 @@ function genBackground(bg) {
 }
 
 module.exports = function (event, callback) {
-  const {width, height} = backgroundParams
+  const {width, height} = imageSize
   const job1 = downloadImage(backgroundImg).then(res => genBackground(res))
   const job2 = downloadImage(avatarImg).then(res => genAvatar(res))
-  const job3 = genText('/tmp/textLayer.png')
+  const job3 = drawText('/tmp/textLayer.png')
   Promise.all([job1, job2, job3]).then(res => {
     gm(width, height, 'none')
       .fill(res[0])
